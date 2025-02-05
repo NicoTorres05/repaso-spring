@@ -48,6 +48,12 @@ public class ClienteService {
         clienteDAO.create(cliente);
     }
 
+    public void updateCliente(Cliente cliente) {
+
+        clienteDAO.update(cliente);
+
+    }
+
     public void deleteCliente(Integer id) {
         List<Pedido> pedidos = pedidoDAO.getByCliente(id);
         pedidos.forEach(p -> pedidoDAO.delete(p.getIdCliente()));
