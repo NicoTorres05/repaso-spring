@@ -25,9 +25,9 @@ public class ClienteDAOImpl implements ClienteDAO {
     public void create(Cliente cliente) {
 
         String sqlInsert = """
-                INSERT INTO cliente (nombre, apellido1, apellido , ciudad, categoría)
-                VALUES (?, ?, ?, ?, ?, ?)
-                """;
+							INSERT INTO cliente (nombre, apellido1, apellido2, ciudad, categoría) 
+							VALUES  (     ?,         ?,         ?,       ?,         ?)
+						   """;
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
@@ -42,7 +42,7 @@ public class ClienteDAOImpl implements ClienteDAO {
             return ps;
         }, keyHolder);
 
-        cliente.setId(keyHolder.getKey().longValue());
+        cliente.setId(keyHolder.getKey().intValue());
 
         log.info("Insertados {} registros.", rows);
     }

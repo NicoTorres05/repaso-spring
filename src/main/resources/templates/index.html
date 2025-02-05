@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{index.title}">Inicio</title>
+</head>
+<body style="padding: 20px">
+<div>
+    <button><a th:text="#{cl.title}" th:href="@{/clientes}">Clientes</a></button>
+    <button><a th:text="#{co.title}" th:href="@{/comerciales}">Comerciales</a></button>
+</div>
+</body>
+</html>
