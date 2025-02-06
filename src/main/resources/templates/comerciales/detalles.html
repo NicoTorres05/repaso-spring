@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{dCo.title}">Detalles Comercial</title>
+    <style>
+        .clearfix::after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+    </style>
+</head>
+<body>
+<div id="contenedora" style="float:none; margin: 0 auto;width: 900px;" >
+    <form th:action="@{/comerciales/detalles}" th:object="${comercial}" method="post">
+        <div class="clearfix">
+            <div style="float: left; width: 50%">
+                <h1 th:text="#{dCo.title}">Detalles Comercial</h1>
+            </div>
+        </div>
+
+        <div class="clearfix">
+            <hr/>
+        </div>
+
+        <div style="margin-top: 6px;" class="clearfix">
+            <div th:text="#{name}" style="float: left;width: 50%">
+                Nombre
+            </div>
+            <div style="float: none;width: auto;overflow: hidden;">
+                <input th:field="*{nombre}" readonly />
+            </div>
+        </div>
+        <div style="margin-top: 6px;" class="clearfix">
+            <div th:text="#{ln1}" style="float: left;width: 50%">
+                Primer apellido
+            </div>
+            <div style="float: none;width: auto;overflow: hidden;">
+                <input th:field="*{apellido1}" readonly />
+            </div>
+        </div>
+        <div style="margin-top: 6px;" class="clearfix">
+            <div th:text="#{ln2}" style="float: left;width: 50%">
+                Segundo apellido
+            </div>
+            <div style="float: none;width: auto;overflow: hidden;">
+                <input th:field="*{apellido2}" readonly />
+            </div>
+        </div>
+        <div style="margin-top: 6px;" class="clearfix">
+            <div th:text="#{com}" style="float: left;width: 50%">
+                Comisión
+            </div>
+            <div style="float: none;width: auto;overflow: hidden;">
+                <input th:field="*{comision}" readonly />
+            </div>
+        </div>
+
+        <div style="margin-top: 6px" class="clearfix">
+            <div th:text="#{d.pe}" style="float: left;width: 50%">
+                Pedidos
+            </div>
+            <div style="float: none;width: auto;overflow: hidden;">
+                <div style="border: solid 1px dodgerblue; border-radius: 15px; margin-top: 10px; padding: 5px 10px 10px 10px; width: 200px"
+                     th:each="pedidoDTO : ${pedidosDTO}">
+
+                    <p th:text="${pedidoDTO.getFecha()}">Fecha</p>
+                    <p th:text="${pedidoDTO.getTotal()} + ' €'">Total</p>
+                    <a th:href="@{/clientes/__${pedidoDTO.getIdCliente()}__}" th:text="${pedidoDTO.getNombreCliente()}" target="_blank">Comercial</a>
+                </div>
+            </div>
+            <div th:if="${pedidosDTO.isEmpty()}" style="float: none;width: auto;overflow: hidden;">
+                <p th:text="#{d.nPe}">No hay pedidos</p>
+            </div>
+        </div>
+    </form>
+    <div style="display: flex; font-size: 18px; margin-top: 20px; justify-content: center">
+        <p th:text="#{d.tCo}"></p>
+        <p style="margin-left: 5px; margin-right: 30px; color: deepskyblue" th:text="${pedidosDTO.size()}">Total Comercial</p>
+        <p th:text="#{dCo.p}"></p>
+        <p style="margin-left: 5px; color: darkgreen" th:text="${porcentajePedidos}"></p>
+        <p style="margin-right: 5px; color: darkgreen">%</p> <p style="color: midnightblue; font-weight: bold">/</p>
+        <p style="margin-left: 5px; color: midnightblue; font-weight: bold" th:text="${totalPedidos}"></p>
+    </div>
+</div>
+<div style="display: flex; margin-top: 50px">
+    <button style="margin: auto"><a th:text="#{back}" th:href="@{/comerciales}">Volver</a></button>
+</div>
+</body>
+</html>

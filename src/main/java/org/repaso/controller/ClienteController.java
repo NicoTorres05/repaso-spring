@@ -57,22 +57,25 @@ public class ClienteController {
     }
 
     @GetMapping("/editar/{id}")
-    public String editar(Model model, @PathVariable int id) {
+    public String editar(Model model, @PathVariable Integer id) {
+
         Cliente cliente = clienteService.one(id);
         model.addAttribute("cliente", cliente);
 
         return "clientes/editar";
+
     }
 
     @PostMapping("/editar/{id}")
     public RedirectView submitEditar(@ModelAttribute("cliente") Cliente cliente) {
+
         clienteService.updateCliente(cliente);
 
         return new RedirectView("/clientes");
     }
 
     @PostMapping("/borrar/{id}")
-    public RedirectView borrar(@PathVariable int id) {
+    public RedirectView borrar(@PathVariable Integer id) {
         clienteService.deleteCliente(id);
 
         return new RedirectView("/clientes");

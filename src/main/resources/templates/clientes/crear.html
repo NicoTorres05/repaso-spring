@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{cCl.title}">Crear Cliente</title>
+    <style>
+        .clearfix::after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+    </style>
+</head>
+<body>
+<div id="contenedora" style="float:none; margin: 0 auto;width: 900px;" >
+    <form th:action="@{/clientes/crear}" th:object="${cliente}" method="post">
+        <div class="clearfix">
+            <div style="float: left; width: 50%">
+                <h1 th:text="#{cCl.title}">Crear Cliente</h1>
+            </div>
+            <div style="float: none;width: auto;overflow: hidden;min-height: 80px;position: relative;">
+
+                <div style="position: absolute; left: 39%; top : 39%;">
+                    <input th:value="#{cBtn}" type="submit" value="Crear"/>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="clearfix">
+            <hr/>
+        </div>
+
+        <div style="margin-top: 6px;" class="clearfix">
+            <div th:text="#{name}" style="float: left;width: 50%">
+                Nombre
+            </div>
+            <div style="float: none;width: auto;overflow: hidden;">
+                <input th:field="*{nombre}" required />
+            </div>
+        </div>
+        <div style="margin-top: 6px;" class="clearfix">
+            <div th:text="#{ln1}" style="float: left;width: 50%">
+                Primer apellido
+            </div>
+            <div style="float: none;width: auto;overflow: hidden;">
+                <input th:field="*{apellido1}" required />
+            </div>
+        </div>
+        <div style="margin-top: 6px;" class="clearfix">
+            <div th:text="#{ln2}" style="float: left;width: 50%">
+                Segundo apellido
+            </div>
+            <div style="float: none;width: auto;overflow: hidden;">
+                <input th:field="*{apellido2}" />
+            </div>
+        </div>
+        <div style="margin-top: 6px;" class="clearfix">
+            <div th:text="#{city}" style="float: left;width: 50%">
+                Ciudad
+            </div>
+            <div style="float: none;width: auto;overflow: hidden;">
+                <input th:field="*{ciudad}" required />
+            </div>
+        </div>
+        <div style="margin-top: 6px;" class="clearfix">
+            <div th:text="#{categ}" style="float: left;width: 50%">
+                Categoria
+            </div>
+            <div style="float: none;width: auto;overflow: hidden;">
+                <input type="number" th:field="*{categoria}" required />
+            </div>
+        </div>
+    </form>
+</div>
+<div style="display: flex; margin-top: 50px">
+    <button style="margin: auto"><a th:text="#{back}" th:href="@{/clientes}">Volver</a></button>
+</div>
+</body>
+</html>
