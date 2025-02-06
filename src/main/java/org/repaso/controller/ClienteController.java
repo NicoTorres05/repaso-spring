@@ -1,11 +1,13 @@
 package org.repaso.controller;
 
+import jakarta.validation.Valid;
 import org.repaso.dao.ClienteDAO;
 import org.repaso.dto.PedidoDTO;
 import org.repaso.model.Cliente;
 import org.repaso.service.ClienteService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -50,10 +52,15 @@ public class ClienteController {
     }
 
     @PostMapping("/crear")
-    public RedirectView submitCrear(@ModelAttribute("cliente") Cliente cliente) {
+    public String submitCrear(@Valid @ModelAttribute Cliente cliente, BindingResult bindingResulted, Model model) {
+        if (bindingResulted.hasErrors()) {
+            model.addAttribute("cliente", cliente);
+
+            return "clientes/crear";
+        }
         clienteService.newCliente(cliente);
 
-        return new RedirectView("/clientes");
+        return "/clientes";
     }
 
     @GetMapping("/editar/{id}")
@@ -67,11 +74,16 @@ public class ClienteController {
     }
 
     @PostMapping("/editar/{id}")
-    public RedirectView submitEditar(@ModelAttribute("cliente") Cliente cliente) {
+    public String submitEditar(@Valid @ModelAttribute Cliente cliente, BindingResult bindingResulted, @PathVariable Integer id, Model model) {
+        if (bindingResulted.hasErrors()) {
+            model.addAttribute("cliente", cliente);
+            model.addAttribute("id", id);
 
+            return "/clientes/editar";
+        }
         clienteService.updateCliente(cliente);
 
-        return new RedirectView("/clientes");
+        return "/clientes";
     }
 
     @PostMapping("/borrar/{id}")
@@ -80,4 +92,5 @@ public class ClienteController {
 
         return new RedirectView("/clientes");
     }
+
 }

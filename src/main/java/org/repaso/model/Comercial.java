@@ -1,9 +1,13 @@
 package org.repaso.model;
 
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+
+import java.math.BigDecimal;
 
 @Data
 
@@ -14,18 +18,19 @@ public class Comercial {
     private int id;
 
     //El @size se puede poner junto el max y el min o separado
-    @NotBlank(message = "Por favor, introduce un nombre.")
-    @Size(min = 4, max = 20, message = "La ciudad debe contener entre 4 y 20 caracteres.")
+    @NotBlank(message = "{err.n.nom}")
+    @Size(max = 30, message = "{err.s.nom}")
     private String nombre;
 
-    @NotBlank(message = "Por favor, introduce un apellido.")
-    @Size(min = 4, max = 20, message = "La ciudad debe contener entre 4 y 20 caracteres.")
+    @NotBlank(message = "{err.n.ln}")
+    @Size(max = 30, message = "{err.n.ln}")
     private String apellido1;
 
-    @Size(min = 4, max = 20, message = "La ciudad debe contener entre 4 y 20 caracteres.")
     private String apellido2;
 
-    private float comision;
+    @DecimalMin(value = "0.276", inclusive = true, message = "{err.min.com}")
+    @DecimalMax(value = "0.946", inclusive = true, message = "{err.max.dom}")
+    private BigDecimal comision;
 
     public Comercial() {}
 }

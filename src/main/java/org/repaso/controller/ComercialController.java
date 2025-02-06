@@ -1,10 +1,13 @@
 package org.repaso.controller;
 
+import jakarta.validation.Valid;
 import org.repaso.dto.PedidoDTO;
+import org.repaso.model.Cliente;
 import org.repaso.model.Comercial;
 import org.repaso.service.ComercialService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -56,11 +59,15 @@ public class ComercialController {
     }
 
     @PostMapping("/crear")
-    public RedirectView submitCrear(@ModelAttribute("comercial") Comercial comercial) {
+    public String submitCrear(@Valid @ModelAttribute Comercial comercial, BindingResult bindingResulted, Model model) {
 
+        if (bindingResulted.hasErrors()) {
+            model.addAttribute("comercial", comercial);
+            return "/comerciales/crear";
+        }
         comercialService.newComercial(comercial);
 
-        return new RedirectView("/comerciales");
+        return "/comerciales";
 
     }
 
@@ -75,11 +82,17 @@ public class ComercialController {
     }
 
     @PostMapping("/editar/{id}")
-    public RedirectView submitEditar(@ModelAttribute("comercial") Comercial comercial) {
+    public String submitEditar(@Valid @ModelAttribute Comercial comercial, BindingResult bindingResulted, @PathVariable Integer id, Model model) {
 
+        if (bindingResulted.hasErrors()) {
+            model.addAttribute("comercial", comercial);
+            model.addAttribute("id", id);
+
+            return "/comerciales/editar";
+        }
         comercialService.updateComercial(comercial);
 
-        return new RedirectView("/comerciales");
+        return "/comerciales";
     }
 
     @PostMapping("/borrar/{id}")
