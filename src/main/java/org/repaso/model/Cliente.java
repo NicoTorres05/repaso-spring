@@ -9,6 +9,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.repaso.validation.RangoCategoria;
+import org.repaso.validation.RangoCategoriaPlus;
 
 @Data
 
@@ -33,7 +34,7 @@ public class Cliente {
     @Size(max = 50, message = "{err.s.c}")
     private String ciudad;
 
-    @RangoCategoria
+    @RangoCategoriaPlus({100, 200, 300, 400, 500, 600, 700, 800, 900, 1000})
     private int categoria;
 
     @Email(message = "{err.f.email}", regexp="^[a-zA-Z0-9._-]+@[a-zA-Z0-9-]+\\.[a-zA-Z.]{2,5}")
